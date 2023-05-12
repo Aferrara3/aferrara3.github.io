@@ -1,0 +1,35 @@
+<html>
+<head>
+<title>A. Ferrara</title>
+</head>
+<body>
+
+<div>
+<div class="title">
+	<strong style="font-size: 24px;">
+          Something Cool is Coming <span style="background:black;   display:inline-block;
+          width:10px; font-size: 14pt;" id="c">&nbsp;</span>
+    </strong>
+</div>
+
+<div class="footer">
+	<div style="margin:8px">Check back soon.</div>
+	<a href="#">Resume</a> | <a href="#">LinkedIn</a> | <a href="#">Blog</a> | <a href="#">Sandbox</a>
+</div>
+
+<style>
+.title{text-align:center; font-family:monospace; margin-top:20%}
+.footer{text-align:center; font-family:monospace; margin:30px; font-size:14pt}
+pre span {
+  color: #ffffff;
+}
+</style>
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/1.1.4/typed.min.js"></script>
+<script type="text/javascript">
+  var i=0;window.setInterval(
+    function(){document.getElementById("c").style.background=(i++&1)?"#ffffff":"#000000";},500);
+</script> 
+
+</body>
+</html>
