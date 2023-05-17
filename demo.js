@@ -20,6 +20,33 @@ function reload_plot(x_dat, y_dat){
 	Plotly.newPlot('myDiv', data, layout);	
 }
 
+function update_date(month, year){
+	target_date = month+"/1/+"year
+	var index = -1
+	for(var i = 0; i < x_dat.length; i++) {
+		if(x_dat[i] == target_date) {
+			index = i;
+			console.log(i)
+			break;
+		}
+	}
+	console.log(i,x_dat[i])
+
+	var normalize_factor = y_dat[i]
+	var x_dat2 = x_dat.slice(i,x_dat.length)
+	var y_dat2 = y_dat.slice(i,y_dat.length).map(x => x / normalize_factor)
+	
+	reload_plot(x_dat2, y_dat2)	
+}
+
+function dateChanged(){
+			var month = document.getElementById("year1-month").value
+			var year = document.getElementById("year1-year").value
+			
+			if (month[0] == "0"){month=month[1]}
+			update_date(month,year)
+		}	
+
 
 d3.csv("https://alexanderferrara.com/files/CPI_out.csv", function(err, rows){
 
@@ -34,18 +61,3 @@ reload_plot(x_dat, y_dat)
 
 });
 
-
-target_date = "4/1/1925"
-var index = -1
-for(var i = 0; i < x_dat.length; i++) {
-    if(x_dat[i] == target_date) {
-        index = i;
-        console.log(i)
-        break;
-    }
-}
-console.log(i,x_dat[i])
-
-normalize_factor = y_dat[i]
-x_dat2 = x_dat.slice(i,x_dat.length)
-y_dat2 = y_dat.slice(i,y_dat.length).map(x => x / normalize_factor)
