@@ -6,7 +6,7 @@ function reload_plot(x_dat, y_dat){
 	  type: "scatter",
 	  mode: "lines",
 	  name: 'Buying Power',
-	  x: x_dat.map(x => Date(x)),
+	  x: x_dat.map(x => new Date(x)),
 	  y: y_dat.map(x => x * 1),
 	  line: {color: '#17BECF'}
 	}
@@ -29,6 +29,9 @@ function reload_plot(x_dat, y_dat){
 		  size: 14,
 		  color: 'black'
 		},
+		tickformat:'%b\n%Y',
+        nticks: 20,
+		tickangle: 30,
 		exponentformat: 'e',
 		showexponent: 'all'
 	  },
