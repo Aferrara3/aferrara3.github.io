@@ -16,7 +16,9 @@ wait = false
 });
 
 while(wait){
-	await new Promise(r => setTimeout(r, 500));
+	setTimeout(function() {
+	  console.log("Waiting!");
+	}, 1000);
 }
 
 var trace1 = {
