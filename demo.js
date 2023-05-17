@@ -1,6 +1,25 @@
 var x_dat
 var y_dat
-var wait = true
+
+function reload_plot(x_dat, y_dat){
+	var trace1 = {
+	  type: "scatter",
+	  mode: "lines",
+	  name: 'Buying Power',
+	  x: x_dat,
+	  y: y_dat.map(x => x * 1),
+	  line: {color: '#17BECF'}
+	}
+
+	var data = [trace1];
+
+	var layout = {
+	  title: 'Basic Time Series',
+	};
+
+	Plotly.newPlot('myDiv', data, layout);	
+}
+
 
 d3.csv("https://alexanderferrara.com/files/CPI_out.csv", function(err, rows){
 
@@ -11,33 +30,9 @@ d3.csv("https://alexanderferrara.com/files/CPI_out.csv", function(err, rows){
 x_dat = unpack(rows, 'Date')
 y_dat = unpack(rows, 'Value')
 
-wait = false
+reload_plot(x_dat, y_dat)
 
 });
-
-//while(wait){
-//	setTimeout(function() {
-//	  console.log("Waiting!");
-//	}, 1000);
-//}
-
-var trace1 = {
-  type: "scatter",
-  mode: "lines",
-  name: 'Buying Power',
-  x: x_dat,
-  y: y_dat.map(x => x * 1),
-  line: {color: '#17BECF'}
-}
-
-var data = [trace1];
-
-var layout = {
-  title: 'Basic Time Series',
-};
-
-Plotly.newPlot('myDiv', data, layout);
-
 
 
 target_date = "4/1/1925"
