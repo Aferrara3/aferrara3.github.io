@@ -14,14 +14,31 @@ function reload_plot(x_dat, y_dat){
 	var data = [trace1];
 
 	var layout = {
-	  title: 'Basic Time Series',
+	  title: 'Buying Power Inflation',
+	  xaxis: {
+		title: 'AXIS TITLE',
+		titlefont: {
+		  family: 'Arial, sans-serif',
+		  size: 18,
+		  color: 'lightgrey'
+		},
+		showticklabels: true,
+		tickangle: 'auto',
+		tickfont: {
+		  family: 'Old Standard TT, serif',
+		  size: 14,
+		  color: 'black'
+		},
+		exponentformat: 'e',
+		showexponent: 'all'
+	  },
 	};
 
 	Plotly.newPlot('myDiv', data, layout);	
 }
 
 function update_date(month, year){
-	target_date = month+"/1/+"year
+	target_date = month+"/1/"+year
 	var index = -1
 	for(var i = 0; i < x_dat.length; i++) {
 		if(x_dat[i] == target_date) {
