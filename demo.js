@@ -1,4 +1,4 @@
-d3.csv("https://raw.githubusercontent.com/plotly/datasets/master/finance-charts-apple.csv", function(err, rows){
+d3.csv("https://alexanderferrara.com/files/CPI_out.csv", function(err, rows){
 
   function unpack(rows, key) {
   return rows.map(function(row) { return row[key]; });
@@ -8,22 +8,13 @@ d3.csv("https://raw.githubusercontent.com/plotly/datasets/master/finance-charts-
 var trace1 = {
   type: "scatter",
   mode: "lines",
-  name: 'AAPL High',
+  name: 'Buying Power',
   x: unpack(rows, 'Date'),
-  y: unpack(rows, 'AAPL.High'),
+  y: unpack(rows, 'Value'),
   line: {color: '#17BECF'}
 }
 
-var trace2 = {
-  type: "scatter",
-  mode: "lines",
-  name: 'AAPL Low',
-  x: unpack(rows, 'Date'),
-  y: unpack(rows, 'AAPL.Low'),
-  line: {color: '#7F7F7F'}
-}
-
-var data = [trace1,trace2];
+var data = [trace1];
 
 var layout = {
   title: 'Basic Time Series',
