@@ -6,7 +6,7 @@ function reload_plot(x_dat, y_dat){
 	  type: "scatter",
 	  mode: "lines",
 	  name: 'Buying Power',
-	  x: x_dat,
+	  x: x_dat.map(x => Date(x)),
 	  y: y_dat.map(x => x * 1),
 	  line: {color: '#17BECF'}
 	}
