@@ -16,12 +16,6 @@ function reload_plot(x_dat, y_dat){
 	var layout = {
 	  title: 'Buying Power Inflation',
 	  xaxis: {
-		title: 'AXIS TITLE',
-		titlefont: {
-		  family: 'Arial, sans-serif',
-		  size: 18,
-		  color: 'lightgrey'
-		},
 		showticklabels: true,
 		tickangle: 'auto',
 		tickfont: {
@@ -35,6 +29,13 @@ function reload_plot(x_dat, y_dat){
 		exponentformat: 'e',
 		showexponent: 'all'
 	  },
+	  yaxis: {
+		title: '$',
+		titlefont: {
+		  family: 'Arial, sans-serif',
+		  size: 18,
+		  color: 'lightgrey'
+		},
 	};
 
 	Plotly.newPlot('myDiv', data, layout);	
