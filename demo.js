@@ -15,11 +15,11 @@ wait = false
 
 });
 
-while(wait){
-	setTimeout(function() {
-	  console.log("Waiting!");
-	}, 1000);
-}
+//while(wait){
+//	setTimeout(function() {
+//	  console.log("Waiting!");
+//	}, 1000);
+//}
 
 var trace1 = {
   type: "scatter",
@@ -37,3 +37,20 @@ var layout = {
 };
 
 Plotly.newPlot('myDiv', data, layout);
+
+
+
+target_date = "4/1/1925"
+var index = -1
+for(var i = 0; i < x_dat.length; i++) {
+    if(x_dat[i] == target_date) {
+        index = i;
+        console.log(i)
+        break;
+    }
+}
+console.log(i,x_dat[i])
+
+normalize_factor = y_dat[i]
+x_dat2 = x_dat.slice(i,x_dat.length)
+y_dat2 = y_dat.slice(i,y_dat.length).map(x => x / normalize_factor)
