@@ -36,6 +36,8 @@ function reload_plot(x_dat, y_dat){
 		  size: 18,
 		  color: 'lightgrey'
 		},
+	  }
+
 	};
 
 	Plotly.newPlot('myDiv', data, layout);	
