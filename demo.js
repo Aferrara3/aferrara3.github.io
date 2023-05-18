@@ -1,6 +1,13 @@
 var x_dat
 var y_dat
 
+var x_dat2
+var y_dat2
+
+window.addEventListener('resize', function(event) {
+    reload_plot(x_dat2, y_dat2)	
+}, true);
+
 function reload_plot(x_dat, y_dat){
 	var trace1 = {
 	  type: "scatter",
@@ -13,7 +20,12 @@ function reload_plot(x_dat, y_dat){
 
 	var data = [trace1];
 
+	var height = 0.9 * (window.innerHeight - document.getElementsByTagName("div")[0].clientHeight)
+	var width = 0.99 * window.innerWidth
+
 	var layout = {
+	  height: height,
+	  width: width,
 	  title: 'Buying Power Inflation',
 	  xaxis: {
 		showticklabels: true,
@@ -56,8 +68,8 @@ function update_date(month, year){
 	console.log(i,x_dat[i])
 
 	var normalize_factor = y_dat[i]
-	var x_dat2 = x_dat.slice(i,x_dat.length)
-	var y_dat2 = y_dat.slice(i,y_dat.length).map(x => x / normalize_factor)
+	x_dat2 = x_dat.slice(i,x_dat.length)
+	y_dat2 = y_dat.slice(i,y_dat.length).map(x => x / normalize_factor)
 	
 	reload_plot(x_dat2, y_dat2)	
 }
@@ -79,6 +91,9 @@ d3.csv("https://alexanderferrara.com/files/CPI_out.csv", function(err, rows){
 
 x_dat = unpack(rows, 'Date')
 y_dat = unpack(rows, 'Value')
+
+x_dat2 = x_dat
+y_dat2 = y_dat
 
 reload_plot(x_dat, y_dat)
 
