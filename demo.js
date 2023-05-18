@@ -11,11 +11,17 @@ window.addEventListener('resize', function(event) {
 function reload_plot(x_dat, y_dat){
 	var trace1 = {
 	  type: "scatter",
-	  mode: "lines",
+	  mode: 'lines+markers',
+  marker: {
+    color: '#17BECF',
+    size: 5
+  },
 	  name: 'Buying Power',
 	  x: x_dat.map(x => new Date(x)),
 	  y: y_dat.map(x => x * 1),
-	  line: {color: '#17BECF'}
+	  hovertemplate: '%{x|%b %Y}<br> %{y:$.2f}<extra></extra>',
+	  line: {color: '#17BECF', width:2},
+      
 	}
 
 	var data = [trace1];
