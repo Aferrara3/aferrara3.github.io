@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Control Panel</title>
+    <script>
+        function sendRequest(url) {
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", url, true);
+            xhr.send();
+        }
+
+        function openDoor() {
+            sendRequest("http://136.38.28.80/?direction=forward");
+            setTimeout(function() {
+                sendRequest("http://136.38.28.80/?direction=stop");
+            }, 5000); // 5 seconds delay
+        }
+
+        function closeDoor() {
+            sendRequest("http://136.38.28.80/?direction=reverse");
+            setTimeout(function() {
+                sendRequest("http://136.38.28.80/?direction=stop");
+            }, 5000); // 5 seconds delay
+        }
+    </script>
+</head>
+<body>
+    <h1>Control Panel</h1>
+    <button onclick="openDoor()">Open</button>
+    <button onclick="closeDoor()">Close</button>
+</body>
+</html>
