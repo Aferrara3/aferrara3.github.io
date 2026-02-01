@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/kalshi/static/css/main.23229f87.css",
-    "main.js": "/kalshi/static/js/main.e93325b6.js",
+    "main.css": "/kalshi/static/css/main.b3613778.css",
+    "main.js": "/kalshi/static/js/main.6a6b02c1.js",
     "index.html": "/kalshi/index.html",
-    "main.23229f87.css.map": "/kalshi/static/css/main.23229f87.css.map",
-    "main.e93325b6.js.map": "/kalshi/static/js/main.e93325b6.js.map"
+    "main.b3613778.css.map": "/kalshi/static/css/main.b3613778.css.map",
+    "main.6a6b02c1.js.map": "/kalshi/static/js/main.6a6b02c1.js.map"
   },
   "entrypoints": [
-    "static/css/main.23229f87.css",
-    "static/js/main.e93325b6.js"
+    "static/css/main.b3613778.css",
+    "static/js/main.6a6b02c1.js"
   ]
 }
