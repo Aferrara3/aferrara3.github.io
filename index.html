@@ -1,35 +1,476 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<title>A. Ferrara</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A. Ferrara - Terminal</title>
+    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <style>
+        body {
+            background-color: #333; /* Fallback */
+            background-image: linear-gradient(135deg, #1e1e1e 0%, #2a2a2a 100%);
+            color: #ccc;
+            font-family: 'Courier New', Courier, monospace;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+        
+        #window-container {
+            width: 80%;
+            height: 70%;
+            max-width: 1000px;
+            background-color: #1e1e1e;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            border: 1px solid #444;
+        }
+
+        #title-bar {
+            background-color: #2d2d2d;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 10px;
+            border-bottom: 1px solid #444;
+            user-select: none;
+        }
+
+        .window-controls {
+            display: flex;
+            gap: 8px;
+        }
+
+        .control-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+        .close { background-color: #ff5f56; }
+        .minimize { background-color: #ffbd2e; }
+        .maximize { background-color: #27c93f; }
+
+        .title-text {
+            color: #aaa;
+            font-size: 14px;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        #menu-bar {
+            background-color: #333;
+            padding: 5px 15px;
+            display: flex;
+            gap: 15px;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-size: 13px;
+            border-bottom: 1px solid #444;
+            position: relative;
+        }
+
+        .menu-item {
+            color: #ddd;
+            cursor: pointer;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+        .menu-item:hover {
+            background-color: #444;
+        }
+
+        .menu-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 10px;
+            background-color: #333;
+            border: 1px solid #555;
+            border-radius: 4px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            display: none;
+            flex-direction: column;
+            width: 180px;
+            z-index: 10;
+        }
+        
+        .menu-dropdown.show {
+            display: flex;
+        }
+
+        .dropdown-item {
+            padding: 8px 15px;
+            color: #ccc;
+            cursor: pointer;
+            text-decoration: none;
+            display: block;
+            border-bottom: 1px solid #3a3a3a;
+        }
+        .dropdown-item:last-child {
+            border-bottom: none;
+        }
+        .dropdown-item:hover {
+            background-color: #444;
+            color: #fff;
+        }
+        .dropdown-item i {
+            width: 20px;
+            text-align: center;
+            margin-right: 8px;
+        }
+
+        #terminal {
+            flex-grow: 1;
+            padding: 10px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            background-color: #1e1e1e;
+            color: #dcdcdc;
+            font-size: 14px;
+        }
+
+        /* Powerlevel10k Styling */
+        .p10k-prompt {
+            display: inline-flex;
+            align-items: center;
+            height: 24px;
+            margin-right: 0;
+            vertical-align: middle;
+        }
+
+        .segment {
+            padding: 0 10px;
+            position: relative;
+            height: 24px;
+            line-height: 24px;
+            font-size: 12px;
+            font-family: 'Roboto Mono', monospace; 
+        }
+
+        .seg-user {
+            background-color: #3a5c3a; /* Greenish */
+            color: #fff;
+            font-weight: bold;
+        }
+        
+        .seg-dir {
+            background-color: #3a5c8c; /* Blueish */
+            color: #fff;
+            font-weight: bold;
+            margin-left: 0; /* Attach directly */
+        }
+        
+        /* Arrow separators using CSS borders */
+        .arrow {
+            width: 0; 
+            height: 0; 
+            border-top: 12px solid transparent;
+            border-bottom: 12px solid transparent;
+            border-left: 10px solid;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        /* Arrow after User segment (Green -> Blue) */
+        .arrow-user-dir {
+            border-left-color: #3a5c3a; /* Previous bg */
+            position: relative;
+            right: 0;
+            z-index: 2;
+            margin-right: -10px; /* Pull next segment over */
+        }
+        
+        /* But this approach is tricky with margins. 
+           Better approach: absolute positioning arrows on segments pseudo elements.
+        */
+        
+        .segment::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 100%;
+            width: 0;
+            height: 0;
+            border-top: 12px solid transparent;
+            border-bottom: 12px solid transparent;
+            border-left: 12px solid;
+            z-index: 2;
+        }
+        
+        .seg-user::after {
+            border-left-color: #3a5c3a;
+        }
+        
+        .seg-dir {
+            padding-left: 15px; /* Make space for previous arrow overlap */
+        }
+        
+        .seg-dir::after {
+            border-left-color: #3a5c8c;
+        }
+
+        .command-line {
+            display: flex;
+            align-items: center;
+            margin-top: 5px;
+            min-height: 24px;
+        }
+
+        #input {
+            background: transparent;
+            border: none;
+            color: #fff;
+            font-family: inherit;
+            font-size: inherit;
+            flex-grow: 1;
+            outline: none;
+            margin-left: 15px; /* Space for the last arrow */
+        }
+        
+        .output {
+            margin-bottom: 5px;
+            line-height: 1.5;
+        }
+        
+        .command-echo {
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .command-result {
+            color: #aaa;
+            margin-left: 0;
+            padding-top: 5px;
+        }
+
+        /* Scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1e1e1e; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #444; 
+            border-radius: 5px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555; 
+        }
+        
+        a { color: #5dade2; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+        /* Mobile tweaks */
+        @media (max-width: 600px) {
+            #window-container {
+                width: 100%;
+                height: 100%;
+                border-radius: 0;
+                border: none;
+            }
+            .seg-user { display: none; } /* Simplify prompt on mobile */
+            .seg-dir { padding-left: 10px; }
+        }
+    </style>
 </head>
 <body>
 
-<div>
-<div class="title">
-	<strong style="font-size: 24px;">
-          Something Cool is Coming <span style="background:black;   display:inline-block;
-          width:10px; font-size: 14pt;" id="c">&nbsp;</span>
-    </strong>
-</div>
+    <div id="window-container">
+        <div id="title-bar">
+            <div class="window-controls">
+                <div class="control-dot close"></div>
+                <div class="control-dot minimize"></div>
+                <div class="control-dot maximize"></div>
+            </div>
+            <div class="title-text">visitor@aferrara: ~</div>
+            <div style="width: 50px;"></div> <!-- Spacer -->
+        </div>
+        
+        <div id="menu-bar">
+            <div class="menu-item" onclick="toggleDropdown('file-dropdown')">File</div>
+            <!-- Additional menus could go here -->
+            <div id="file-dropdown" class="menu-dropdown">
+                <div class="dropdown-item" onclick="handleMenuClick('resume')"><i class="fa fa-file-pdf-o"></i> Resume</div>
+                <div class="dropdown-item" onclick="handleMenuClick('linkedin')"><i class="fa fa-linkedin-square"></i> LinkedIn</div>
+                <div class="dropdown-item" onclick="handleMenuClick('sandbox')"><i class="fa fa-flask"></i> Sandbox</div>
+                <div class="dropdown-item" onclick="handleMenuClick('narrative')"><i class="fa fa-book"></i> Career Narrative</div>
+                <div class="dropdown-item" onclick="handleMenuClick('help')"><i class="fa fa-question-circle"></i> Help</div>
+            </div>
+        </div>
 
-<div class="footer">
-	<div style="margin:8px">Check back soon.</div>
-	<a href="files/Alexander_Ferrara_Resume_11.18.25.pdf">Resume</a> | <a href="https://www.linkedin.com/in/a-ferrara/">LinkedIn</a> | <a href="https://www.rariai.com/">Sandbox</a>
-</div>
+        <div id="terminal" onclick="focusInput()">
+            <div class="output">Welcome to A. Ferrara's interactive terminal v2.0</div>
+            <div class="output">Type <span style="color:#27c93f; font-weight:bold;">help</span> to see available commands or use the File menu.</div>
+            <div class="output"><br></div>
+        </div>
+    </div>
 
-<style>
-.title{text-align:center; font-family:monospace; margin-top:20%}
-.footer{text-align:center; font-family:monospace; margin:30px; font-size:14pt}
-pre span {
-  color: #ffffff;
-}
-</style>
-<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/1.1.4/typed.min.js"></script>
-<script type="text/javascript">
-  var i=0;window.setInterval(
-    function(){document.getElementById("c").style.background=(i++&1)?"#ffffff":"#000000";},500);
-</script> 
+    <script>
+        const terminal = document.getElementById('terminal');
+        
+        const commands = {
+            help: {
+                description: "List available commands",
+                execute: () => {
+                    printOutput("Available commands:");
+                    printOutput("  <span style='color:#27c93f'>help</span>       - Show this help message");
+                    printOutput("  <span style='color:#27c93f'>resume</span>     - View/Download Resume");
+                    printOutput("  <span style='color:#27c93f'>linkedin</span>   - Visit LinkedIn profile");
+                    printOutput("  <span style='color:#27c93f'>sandbox</span>    - Visit Sandbox site (rariai.com)");
+                    printOutput("  <span style='color:#27c93f'>narrative</span>  - View Career Narrative page");
+                    printOutput("  <span style='color:#27c93f'>ls</span>         - List files");
+                    printOutput("  <span style='color:#27c93f'>clear</span>      - Clear the terminal screen");
+                    printOutput("  <span style='color:#27c93f'>whoami</span>     - Display current user");
+                }
+            },
+            resume: {
+                description: "View Resume",
+                execute: () => {
+                    printOutput("Opening Resume...", "info");
+                    window.open('files/Alexander_Ferrara_Resume_11.18.25.pdf', '_blank');
+                }
+            },
+            linkedin: {
+                description: "Visit LinkedIn",
+                execute: () => {
+                    printOutput("Opening LinkedIn...", "info");
+                    window.open('https://www.linkedin.com/in/a-ferrara/', '_blank');
+                }
+            },
+            sandbox: {
+                description: "Visit Sandbox",
+                execute: () => {
+                    printOutput("Opening Sandbox...", "info");
+                    window.open('https://www.rariai.com/', '_blank');
+                }
+            },
+            narrative: {
+                description: "View Career Narrative",
+                execute: () => {
+                    printOutput("Opening Career Narrative...", "info");
+                    window.location.href = 'career-narrative/';
+                }
+            },
+            ls: {
+                description: "List files",
+                execute: () => {
+                    printOutput("resume.pdf  linkedin.url  sandbox.url  narrative.dir");
+                }
+            },
+            clear: {
+                description: "Clear screen",
+                execute: () => {
+                    terminal.innerHTML = '';
+                    createNewInputLine();
+                    return true; // Signal that we cleared
+                }
+            },
+            whoami: {
+                description: "Current user",
+                execute: () => {
+                    printOutput("visitor");
+                }
+            }
+        };
 
+        // P10k Prompt HTML generator
+        function getPromptHTML() {
+            return `
+            <div class="p10k-prompt">
+                <span class="segment seg-user"><i class="fa fa-user"></i> visitor</span>
+                <span class="segment seg-dir"><i class="fa fa-folder-open"></i> ~</span>
+            </div>`;
+        }
+
+        function createNewInputLine() {
+            const line = document.createElement('div');
+            line.className = 'command-line';
+            line.innerHTML = getPromptHTML() + `<input type="text" id="input" autocomplete="off" autofocus spellcheck="false">`;
+            terminal.appendChild(line);
+            
+            const input = line.querySelector('#input');
+            input.focus();
+            
+            input.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    const cmd = input.value;
+                    input.disabled = true; // Disable old input
+                    processCommand(cmd);
+                }
+            });
+            
+            // Scroll to bottom
+            terminal.scrollTop = terminal.scrollHeight;
+        }
+        
+        function focusInput() {
+            const input = document.querySelector('#input:not([disabled])');
+            if (input) input.focus();
+        }
+
+        function printOutput(text, type="normal") {
+            const div = document.createElement('div');
+            div.className = 'output command-result';
+            if (type === "info") div.style.color = "#5dade2";
+            div.innerHTML = text;
+            terminal.appendChild(div);
+            terminal.scrollTop = terminal.scrollHeight;
+        }
+
+        function processCommand(cmd) {
+            const cleanCmd = cmd.trim();
+            
+            // If empty, just new line
+            if (cleanCmd !== '') {
+                const cmdKey = cleanCmd.toLowerCase().split(' ')[0];
+                
+                if (commands[cmdKey]) {
+                    const cleared = commands[cmdKey].execute();
+                    if (cleared) return; // Don't create new line if cleared
+                } else {
+                    printOutput(`<span style='color:#ff5f56'>Command not found:</span> ${cleanCmd}. Type <span style='color:#27c93f'>help</span> for available commands.`);
+                }
+            }
+            
+            createNewInputLine();
+        }
+
+        function toggleDropdown(id) {
+            const el = document.getElementById(id);
+            el.classList.toggle('show');
+        }
+
+        function handleMenuClick(cmd) {
+            const activeInput = document.querySelector('#input:not([disabled])');
+            if (activeInput) {
+                activeInput.value = cmd;
+                activeInput.disabled = true;
+                processCommand(cmd);
+            }
+            // Close dropdown
+            document.getElementById('file-dropdown').classList.remove('show');
+        }
+
+        // Close dropdown if clicked outside
+        window.onclick = function(event) {
+            if (!event.target.matches('.menu-item') && !event.target.closest('.menu-dropdown')) {
+                const dd = document.getElementById('file-dropdown');
+                if (dd.classList.contains('show')) {
+                    dd.classList.remove('show');
+                }
+            }
+        }
+
+        // Initialize
+        createNewInputLine();
+        
+    </script>
 </body>
 </html>
