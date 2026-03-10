@@ -1,0 +1,48 @@
+
+RewriteOptions inherit
+# Use PHP5.6 as default
+AddHandler application/x-httpd-php56 .php
+
+# BlueHost.com 
+# .htaccess main domain to subdirectory redirect 
+# Do not change this line. 
+RewriteEngine on 
+# Change example.com to be your main domain. 
+# Change 'subdirectory' to be the directory you will use for your main domain. 
+# Don't change the following two lines. 
+# Change 'subdirectory' to be the directory you will use for your main domain. 
+RewriteCond %{HTTP_HOST} ^(www.)?alexanderferrara.com$ 
+RewriteCond %{REQUEST_URI} !^/main/ 
+RewriteCond %{REQUEST_FILENAME} !-f 
+RewriteCond %{REQUEST_FILENAME} !-d 
+RewriteCond %{REQUEST_URI} !^/\.well-known/acme-challenge/[0-9a-zA-Z_-]+$
+RewriteCond %{REQUEST_URI} !^/\.well-known/cpanel-dcv/[0-9a-zA-Z_-]+$
+RewriteCond %{REQUEST_URI} !^/\.well-known/pki-validation/[A-F0-9]{32}\.txt(?:\ Comodo\ DCV)?$
+RewriteRule ^(.*)$ /main/$1 
+# Change example.com to be your main domain again. 
+# Change 'subdirectory' to be the directory you will use for your main domain 
+# followed by / then the main file for your site, index.php, index.html, etc. 
+RewriteCond %{HTTP_HOST} ^(www.)?alexanderferrara.com$ 
+RewriteCond %{REQUEST_URI} !^/\.well-known/acme-challenge/[0-9a-zA-Z_-]+$
+RewriteCond %{REQUEST_URI} !^/\.well-known/cpanel-dcv/[0-9a-zA-Z_-]+$
+RewriteCond %{REQUEST_URI} !^/\.well-known/pki-validation/[A-F0-9]{32}\.txt(?:\ Comodo\ DCV)?$
+RewriteRule ^(/)?$ main/index.html [L]
+## hide .html extension
+# To externally redirect /dir/file.html to /dir/file
+RewriteCond %{THE_REQUEST} \s/+(.+?)\.html[\s?] [NC]
+RewriteCond %{REQUEST_URI} !^/\.well-known/acme-challenge/[0-9a-zA-Z_-]+$
+RewriteCond %{REQUEST_URI} !^/\.well-known/cpanel-dcv/[0-9a-zA-Z_-]+$
+RewriteCond %{REQUEST_URI} !^/\.well-known/pki-validation/[A-F0-9]{32}\.txt(?:\ Comodo\ DCV)?$
+RewriteRule ^ /%1 [R=302,L,NE]
+# To internally forward /dir/file to /dir/file.html
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{DOCUMENT_ROOT}/$1\.html -f [NC]
+RewriteCond %{REQUEST_URI} !^/\.well-known/acme-challenge/[0-9a-zA-Z_-]+$
+RewriteCond %{REQUEST_URI} !^/\.well-known/cpanel-dcv/[0-9a-zA-Z_-]+$
+RewriteCond %{REQUEST_URI} !^/\.well-known/pki-validation/[A-F0-9]{32}\.txt(?:\ Comodo\ DCV)?$
+RewriteRule ^(.+?)/?$ /$1.html [L]
+RewriteCond %{HTTP_HOST} ^.*$
+RewriteCond %{REQUEST_URI} !^/\.well-known/acme-challenge/[0-9a-zA-Z_-]+$
+RewriteCond %{REQUEST_URI} !^/\.well-known/cpanel-dcv/[0-9a-zA-Z_-]+$
+RewriteCond %{REQUEST_URI} !^/\.well-known/pki-validation/[A-F0-9]{32}\.txt(?:\ Comodo\ DCV)?$
+RewriteRule ^/?$ "https\:\/\/alexanderferrara\.com\/" [R=301,L]

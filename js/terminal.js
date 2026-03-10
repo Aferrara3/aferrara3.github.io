@@ -57,7 +57,7 @@
             ls: {
                 description: "List files",
                 execute: () => {
-                    printOutput("resume.pdf  linkedin.url  sandbox.url  narrative.dir  index.html  secret.txt");
+                    printOutput("resume.pdf  linkedin.url  sandbox.url  narrative.dir  blog.dir  legacy.dir  index.html  secret.txt");
                 }
             },
             history: {
