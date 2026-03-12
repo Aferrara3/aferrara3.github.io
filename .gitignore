@@ -1,0 +1,10 @@
+.env
+*.log
+*.pyc
+__pycache__/
+venv/
+*.pkl
+*.pickle
+*.db
+*.sqlite
+.DS_Store

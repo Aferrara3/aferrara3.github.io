@@ -1,0 +1,100 @@
+<html>
+<head><title>Arb Finder</title></head>
+<body>
+<div>
+	<button type="submit" class="btn414" onclick="help()"> Help </button>
+	<button type="submit" class="btn414" onclick="reload()"> Reload Data </button>
+	<div class="hedr">
+		Data shown as of: <div class="hedr" id="data-time" style="font-weight:bold">.</div>. Dependent API credits used: <div class="hedr" id="credits-used">.</div>, <div class="hedr" id="credits-rem">.</div> remaining.
+	</div> 
+</div>
+<table id="table-id" border="1"></table>    
+
+<script src="static/jquery.min.js"></script>
+<script src="static/jquery.dataTables.min.js"></script>
+<script src="static/dataTables.responsive.js"></script>
+<!--<script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js" async></script> -->
+<script src="static/jquery-ui.min.js"></script>
+
+
+<script>
+    $(document).ready(function () {
+		get_data("beep boop");
+    });
+	function help(){
+		$( "#dialog-explain" ).dialog({
+      resizable: false,
+      height: "auto",
+      width: "90%",
+      modal: true,
+      buttons: {
+        "Let's Go!": function() {
+          $( this ).dialog( "close" );
+        }
+      }
+    });
+	}
+	
+	
+	
+	function reload(){
+		$( "#dialog-confirm" ).dialog({
+      resizable: false,
+      height: "auto",
+      width: 400,
+      modal: true,
+      buttons: {
+        "Yeah, Reload it!": function() {
+          $( this ).dialog( "close" );
+		  console.log("reload requested");
+		  $("#table-id_wrapper")[0].remove()
+		  get_data("true");
+        },
+        Nvm: function() {
+          $( this ).dialog( "close" );
+        }
+      }
+    });
+	}
+	function get_data(prompt){
+		$.post("https://www.rariai.com/get_arbs_html",
+          {
+			prompt: prompt
+          },
+          function(data,status){			
+			$("body").append('<table id="table-id" border="1"></table>')
+        	$("#table-id")[0].innerHTML = data.html
+			$("#data-time")[0].innerHTML = data.x
+			$("#credits-used")[0].innerHTML = data.y
+			$("#credits-rem")[0].innerHTML = data.z
+
+			$('#table-id').DataTable({order: [[5, 'desc']]});
+			//hideSpinner()
+          });
+	}
+</script>
+
+<div id="dialog-confirm" style="display:none" title="Refresh Data?">
+  <p>This app relies on a 3rd party API for which I have pretty limited credits... Are you sure that you want to refresh at this time? <br/><br/>If so, please consider donating to expand API access limit.</p>
+</div>
+<div id="dialog-explain" style="display:none" title="WTF Am I Looking At?">
+  <p>No table showing? Probably no arb opportunities available at the moment. Try again while some games are on. Lines move the most during the games, and sportsbooks don't all mirror each other perfectly, creating these opportunities!
+  
+  <br/><br/>
+  Aight let's make some money.<br/>
+  <img style="max-width:100%; margin: 10 0px" src="static/sample_line.png"/><br/>
+  For convenience let's assume that you have a $100 bankroll to dedicate to a given surebet.
+  So for this arb you would go to draftkings and place a $37.78 bet on the Tigers to cover the -5.5 pt spread for +180. You would also go on foxbet and place a $62.22 bet on the Diamondbacks with the same spread (+5.5) at -143. With these odds and bet sizes you will guarantee that for EITHER outcome you will net +$5.78. 
+  <br/><br/>
+  These bet sizes would be mad sus tho, so I have included a quick glance at the outcomes if you round each to the nearest $1 or $5. As you can see the volatility will increase, but still great return potential and still guaranteed to be a risk-free bet! You could also modify total bankroll for this bet with the same fulcrum split %s to round out your bet sizes while maintaining a fixed return rate. 
+  
+  
+  </p>
+</div>
+
+<link href="static/sba-style.css" rel="stylesheet"/>
+<link href="static/jquery.dataTables.min.css" rel="stylesheet"/>
+<link href="static/jquery-ui.css" rel="stylesheet"/>
+<link href="static/dataTables.responsive.css" rel="stylesheet"/>
+</body>
+</html>

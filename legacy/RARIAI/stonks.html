@@ -1,0 +1,215 @@
+<html>
+<head>
+<title>ML4Stonks</title>
+<script src="static/jquery.min.js"></script>
+<script src="static/jquery-ui.min.js"></script>
+<script src="static/plotly-latest.min.js"></script>
+<script>
+	$( function() {
+	  $( "#ed_picker" ).datepicker({dateFormat: "yy-mm-dd"});
+	  $( "#sd_picker" ).datepicker({dateFormat: "yy-mm-dd"});
+	  $( "#is_sd_picker" ).datepicker({dateFormat: "yy-mm-dd"});
+	  $( "#is_ed_picker" ).datepicker({dateFormat: "yy-mm-dd"});
+	  $( "#ind1" ).checkboxradio();
+	  $( "#ind2" ).checkboxradio();
+	  $( "#ind3" ).checkboxradio();
+	} );
+	</script>
+<script>
+function showSpinner() {
+	var loadingDiv = document.getElementById('loading');
+	loadingDiv.style.visibility = 'visible';
+}
+function hideSpinner() {
+	var loadingDiv = document.getElementById('loading');
+	loadingDiv.style.visibility = 'hidden';
+}
+function residzebar(){
+	var body = document.body,
+		html = document.documentElement;
+
+	var height = Math.max( body.scrollHeight, body.offsetHeight, 
+						   html.clientHeight, html.scrollHeight, html.offsetHeight );
+	$(".sidebar")[0].style.height = height		   
+}
+$(document).ready(function(){
+
+	$(window).on("pageshow", function(event) {
+		window.scrollTo(0, 0);
+	});
+
+	$("textarea").keydown(function(e){
+    // Enter pressed
+    if (e.keyCode == 13)
+    {
+        //method to prevent from default behaviour
+        e.preventDefault();
+    }
+	});
+	
+	/*$( "#accordion" ).accordion({
+      collapsible: true
+    });*/
+
+    function plot_helper(traces_in){
+		traces = []
+		traces_in.forEach(element =>
+			traces.push(
+				{
+					x: element[0],
+					y: element[1],
+					type: 'scatter',
+					name: element[2]
+				}
+			));
+			data_clean = traces
+			stonk = $("#prompt_text").val();
+			var layout = {
+                title: ( stonk ? stonk : 'GME')  + " [Close]",
+				showlegend: true,
+				legend: {"orientation": "h"}
+            };
+			Plotly.newPlot('myDiv', data_clean, layout);
+	}
+	
+	$("#button1").click(function(){
+      showSpinner()		
+      $.post("https://www.rariai.com/stonks",
+          {
+			prompt: $("#prompt_text").val(),
+			sd: $("#sd_picker").val(),
+			ed: $("#ed_picker").val()		  
+          },
+          function(data,status){
+        	$("#response_text")[0].innerHTML = data.html
+			plot_helper([[data.x, data.y, $("#prompt_text").val()]])	
+			hideSpinner()
+			residzebar()
+          });
+	});
+
+	$("#button2").click(function(){
+      showSpinner()		
+
+	  var inds = []
+	  $("#ind1")[0].checked ? inds = inds.concat("RSI") : false
+	  $("#ind2")[0].checked ? inds = inds.concat("BBP") : false
+	  $("#ind3")[0].checked ? inds = inds.concat("MACD") : false
+	  
+
+	  var prompt = $("#prompt_text").val()
+	  var is_sd = $("#is_sd_picker").val()
+	  var is_ed = $("#is_ed_picker").val()
+
+
+	  console.log(inds)
+      $.post("https://www.rariai.com/stonk_model_train",
+          {
+			prompt: prompt,
+			sd: is_sd,
+			ed: is_ed,
+			inds: JSON.stringify(inds)	  
+          },
+          function(data,status){
+        	$("#response_text")[0].innerHTML = "Model Generated! ID: " + data.model_id
+
+			is_sd == "" ? $("#sd_picker").val($("#is_sd_picker")[0].placeholder) : $("#sd_picker").val(is_sd)
+			is_ed == "" ? $("#ed_picker").val($("#is_ed_picker")[0].placeholder) : $("#ed_picker").val(is_ed)
+			prompt == "" ? $("#prompt").val($("#prompt")[0].placeholder) : $("#prompt").val(prompt)
+			$("#model_picker").val(data.model_id)
+			//hideSpinner()
+			$("#button3").click()
+          });
+	});
+	$("#button3").click(function(){
+      showSpinner()		
+      $.post("https://www.rariai.com/stonk_model_test",
+          {
+			prompt: $("#prompt_text").val(),
+			sd: $("#sd_picker").val(),
+			ed: $("#ed_picker").val(),
+			model: $("#model_picker").val()
+          },
+          function(data,status){
+        	$("#response_text")[0].innerHTML = 
+				"Benchmark: <br/> \
+				Cumulative Return: " + Math.round(data.bmstats.cum_ret * 100) + "% <br/> \
+				Sharpe Ratio: " +  Math.round(data.bmstats.sr * 100) / 100
+
+				+ "<br/><br/> Learner: <br/> \
+				Cumulative Return: " + Math.round(data.slstats.cum_ret * 100) + "% <br/> \
+				Sharpe Ratio: " +  Math.round(data.slstats.sr * 100) / 100
+			plot_helper([[data.bmx, data.bmy, $("#prompt_text").val()],[data.slx, data.sly, "Model: "+$("#model_picker").val()]])	
+			hideSpinner()
+			residzebar()
+          });
+	});
+	
+});
+
+</script>
+<meta charset="UTF-8" />
+<link rel="stylesheet" href="static/jquery-ui.css">
+<link rel="stylesheet" href="static/stonk-style.css" />
+<link rel="stylesheet" href="static/spin.css" />
+
+</head>
+<body>
+
+<div class = "sidebar">
+	<div class="prompt-container">
+		<div id="prompt">
+			<h1>ML4Stonks</h1>
+			<h3>Stonk:</h3> 
+			<!--<textarea id="prompt_text" class="ta3" autofocus placeholder="GME"></textarea>-->
+			<input type="text" id="prompt_text" class="ta2 dp" autofocus placeholder="GME">
+			<h3>Start Date</h3>
+			<input type="text" id="sd_picker" class="ta2 dp" placeholder="2017-08-01">
+			<h3>End Date</h3>
+			<input type="text" id="ed_picker"class="ta2 dp" placeholder="2019-09-02">
+			<button class="button-46" id="button1">Price Data</button>
+			<h3>Add Model:</h3>
+			<input type="text" id="model_picker"class="ta2" placeholder="Model-ID">
+			<button class="button-46" id="button3">Test!</button>
+
+			<div id="accordion">
+				<h3 class="mbh">Model Builder:</h3>
+				<div>
+				<hr>
+				<h3>In-Sample</h3>
+				<input type="text" id="is_sd_picker"class="ta2 dp" placeholder="2016-07-30">
+				<input type="text" id="is_ed_picker"class="ta2 dp" placeholder="2017-07-30">
+				<h3>Indicators</h3>
+				<div class="widget">
+					<fieldset>
+						<label for="ind1">RSI</label>
+						<input type="checkbox" name="ind1" id="ind1">
+						<label for="ind2">BBP</label>
+						<input type="checkbox" name="ind2" id="ind2">
+						<label for="ind3">MACD</label>
+						<input type="checkbox" name="ind3" id="ind3">
+					</fieldset>
+				</div>
+			</div>
+			</div>
+		</div>
+	
+		<button class="button-46" id="button2">Train & Test!</button>
+			
+		<br/>
+		<button class="button-46"  onclick="window.location.href='modeler.html';" href="">Model db</button>
+	</div>
+</div>
+<div class="content-main">
+	<div id="loading" class="loading">
+		Loading&#8230;     
+	</div>
+	<div id="myDiv"><!-- Plotly chart will be drawn inside this DIV --></div>
+	<div id="response" class="response">
+		<div id="response_text"></div>
+	</div>
+	
+</div>
+
+</body>
+</html>

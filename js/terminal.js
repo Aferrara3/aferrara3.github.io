@@ -18,8 +18,12 @@
                     printOutput("  <span style='color:var(--cmd-success)'>history</span>    - Show command history");
                     printOutput("  <span style='color:var(--cmd-success)'>clear</span>      - Clear the terminal screen");
                     printOutput("  <span style='color:var(--cmd-success)'>whoami</span>     - Display current user");
+                    printOutput("  <span style='color:var(--cmd-success)'>date</span>       - Display current date/time");
+                    printOutput("  <span style='color:var(--cmd-success)'>weather</span>    - Check the weather");
                     printOutput("<br>Fun & Utilities:");
                     printOutput("  <span style='color:var(--cmd-success)'>cat [file]</span> - Display file content");
+                    printOutput("  <span style='color:var(--cmd-success)'>echo [text]</span> - Echo input text");
+                    printOutput("  <span style='color:var(--cmd-success)'>joke</span>       - Tell a random dev joke");
                     printOutput("  <span style='color:var(--cmd-success)'>matrix</span>     - Toggle Matrix rain effect");
                     printOutput("  <span style='color:var(--cmd-success)'>theme [name]</span> - Change theme (default, matrix, light)");
                     printOutput("  <span style='color:var(--cmd-success)'>coffee</span>     - Need caffeine?");
@@ -80,6 +84,43 @@
                 description: "Current user",
                 execute: () => {
                     printOutput("visitor");
+                }
+            },
+            date: {
+                description: "Display date",
+                execute: () => {
+                    printOutput(new Date().toString());
+                }
+            },
+            echo: {
+                description: "Echo input",
+                execute: (args) => {
+                    printOutput(args || "");
+                }
+            },
+            weather: {
+                description: "Current weather",
+                execute: () => {
+                    const weathers = [
+                        "Sunny, 72°F. Perfect day for coding.",
+                        "Cloudy with a chance of merge conflicts.",
+                        "Rainy. Good time to stay inside and hack.",
+                        "404 Weather Not Found."
+                    ];
+                    printOutput(weathers[Math.floor(Math.random() * weathers.length)]);
+                }
+            },
+            joke: {
+                description: "Tell a joke",
+                execute: () => {
+                    const jokes = [
+                        "Why do programmers prefer dark mode? Because light attracts bugs.",
+                        "How many programmers does it take to change a light bulb? None, that's a hardware problem.",
+                        "I would tell you a UDP joke, but you might not get it.",
+                        "A SQL query walks into a bar, walks up to two tables and asks, 'Can I join you?'",
+                        "There are 10 types of people in the world: those who understand binary, and those who don't."
+                    ];
+                    printOutput(jokes[Math.floor(Math.random() * jokes.length)]);
                 }
             },
             // Fun Commands

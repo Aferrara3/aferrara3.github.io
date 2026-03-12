@@ -1,0 +1,105 @@
+<html>
+<head>
+	<title>Catan Trading Bloc</title>
+	<style>
+		.res {
+			width: 140px;
+			height: 140px;
+			border-radius: 50%;
+			border: 8px solid black;
+			margin: 0 auto;
+			background-color:grey;
+			transform: rotate(90deg);
+			background-size: contain;
+			background-repeat: no-repeat;
+			background-position:center;
+			margin-top: 5px;
+			margin-bottom: 5px;
+		}
+
+		.container {
+			margin: 0 auto;
+			width: 100%;
+			align: center;
+			text-align: center
+		}
+
+		#circle0 {
+			background-image: url("static/wood.png");
+		}
+		#circle1 {
+			background-image: url("static/brick.png");
+		}
+		#circle2 {
+			background-image: url("static/wheat.png");
+		}
+		#circle3 {
+			background-image: url("static/ore.png");
+		}
+		#circle4 {
+			background-image: url("static/sheep.png");
+		}
+
+
+
+	</style>
+	<meta name = "viewport" content = "width=device-width, minimum-scale=1.0, maximum-scale = 1.0, user-scalable = no">
+
+</head>
+<body>
+	<div class="container">
+		<div id="circle0" class="res"></div>
+		<div id="circle1" class="res"></div>
+		<div id="circle2" class="res"></div>
+		<div id="circle3" class="res"></div>
+		<div id="circle4" class="res"></div>
+	</div>
+
+	<script>
+		var colors = ["grey", "#74C365", "#E34234"];
+		var colors2 = ["black", "green", "#AA0000"];
+
+		var index = [0,0,0,0,0];
+		var evt = 0
+		function changeColor(evt) {
+			console.log(evt)
+				id = (evt.target.id[6])
+				var circle = document.getElementById("circle"+id);
+				index[id] = (index[id] + 1) % colors.length;
+				circle.style.borderColor = colors2[index[id]];
+				circle.style.backgroundColor = colors[index[id]];
+
+		}
+
+		var circle0 = document.getElementById("circle0");
+		circle0.addEventListener("click", changeColor);
+
+		var circle1 = document.getElementById("circle1");
+		circle1.addEventListener("click", changeColor);
+
+		var circle2 = document.getElementById("circle2");
+		circle2.addEventListener("click", changeColor);
+
+		var circle3 = document.getElementById("circle3");
+		circle3.addEventListener("click", changeColor);
+
+		var circle4 = document.getElementById("circle4");
+		circle4.addEventListener("click", changeColor);
+
+
+//		function screen_adjust(){
+			width = screen.width
+			height = (screen.height/5) - 60
+
+			var cols = document.getElementsByClassName('res');
+			for(i = 0; i < cols.length; i++) {
+				console.log(i)
+				cols[i].style.height = height;
+				cols[i].style.width = height;
+			}
+//			return height
+//		}
+
+	</script>
+</body>
+</html>

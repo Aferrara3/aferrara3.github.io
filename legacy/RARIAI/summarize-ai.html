@@ -1,0 +1,59 @@
+<html>
+<head>
+<title>Summarize-AI</title>
+<script src="static/jquery.min.js"></script>
+
+<script>
+function showSpinner() {
+	var loadingDiv = document.getElementById('loading');
+	loadingDiv.style.visibility = 'visible';
+}
+function hideSpinner() {
+	var loadingDiv = document.getElementById('loading');
+	loadingDiv.style.visibility = 'hidden';
+}
+$(document).ready(function(){
+    $("button").click(function(){
+        showSpinner()
+		$.post("https://www.rariai.com/summarize_prompt",
+        {
+		  prompt: $("#prompt_text").val(),
+		  age: $("#age").val()
+        },
+        function(data,status){
+            //alert("Data: " + data + "\nStatus: " + status);
+			$("#response_text").text(data)
+			hideSpinner()
+        });
+    });
+});
+
+</script>
+<meta charset="UTF-8" />
+<link rel="stylesheet" href="static/style.css" />
+<link rel="stylesheet" href="static/spin.css" />
+</head>
+<body>
+
+<div class="content-main">
+<div id="loading" class="loading">
+		Loading&#8230;
+	</div>
+	<div class="sum-prompt-container">
+		<div id="sum-prompt">
+			<h1>Summarize . . .</h1>
+			<textarea id="prompt_text" class="ta3" autofocus placeholder="Paste Specific Text Here to be Summarized OR Enter High Level Topic"></textarea>
+			<h2> . . . in
+		  <textarea id="age" class="ta2">10</textarea>
+		  words or less</h2>
+		</div>
+
+		<button class="button-46">Go!</button>
+	</div>
+
+	<div id="response" class="response">
+	<p id="response_text"></p>
+	</div>
+</div>
+</body>
+</html>

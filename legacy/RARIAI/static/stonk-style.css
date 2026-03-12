@@ -1,0 +1,349 @@
+@charset "utf-8";
+/*					
+	Author		CrystalCommerce.com // Ross Dallaire
+	
+	Colors
+*/
+
+/* RESET */
+html, body, div, span, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, code,
+del, dfn, em, img, q, dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-weight: inherit;
+  font-style: inherit;
+  font-size: 100%;
+  font-family: inherit;
+}
+
+em {
+	font-style: italic;
+}
+
+strong {
+	font-weight: bold;
+}
+
+html,
+body {
+	margin:0;
+	padding:0;
+	height:100%;
+}
+/* /END RESET */
+body {
+	background: white/* url("img/bodyBg_repeatX.gif") top repeat-x;*/;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+}
+
+textarea {
+  /*width: 100%;
+  height: 150px;
+  margin: 5px;*/
+  padding: 2px 2px 2px 2px;
+  box-sizing: border-box;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  background-color: #f8f8f8;
+  font-size: 16px;
+  resize: none;
+  margin: 10px 0px 0px 0px;
+  font-family: Arial, Helvetica, sans-serif;
+
+}
+
+.content-main{
+  /*max-width: 800px;*/
+  margin: auto;
+  width: 85%;
+  float: left;
+  background-color: white;
+  height: 100%;
+  display: inline;
+  position: relative
+}
+.mbh{
+	margin: auto;
+	margin-top:25px;
+}	
+.sidebar {
+	width: 8%;
+	min-width: 150px;
+	padding: 10px;
+	float: left;
+	background-color: whitesmoke;
+	height: 100%;
+	border: 1px solid black;
+	display: inline;
+	position: relative;
+}
+
+.ta3{
+	background-color: #f5f5f5;
+	color:black;
+	overflow:hidden;
+	resize: none;
+	box-sizing: border-box;
+	border: 2px solid #ccc;
+	max-width: 40px;
+	background-color: white;
+	padding: 5 5 5 5px;
+	height:2em;
+	border-radius: 4px;
+	margin: 0 0 10 0px;
+	resize: none;
+	font-family: Arial, Helvetica, sans-serif;
+ }
+
+#prompt > h3 {
+	font-weight:bold;
+	font-size:16px;
+}
+
+.prompt-container{
+  margin-left: 20%;
+  margin-right: 20%;
+  padding: 10% 0 0 0px;
+}
+
+
+/* CSS */
+.button-46 {
+  align-items: center;
+  background-color: rgba(240, 240, 240, 0.26);
+  border: 1px solid #DFDFDF;
+  border-radius: 14px;
+  box-sizing: border-box;
+  color: #000000;
+  cursor: pointer;
+  display: flex;
+  font-family: Inter, sans-serif;
+  font-size: 18px;
+  justify-content: center;
+  line-height: 28px;
+  max-width: 100%;
+  padding: 14px 22px;
+  text-decoration: none;
+  transition: all .2s;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  width: 100%;
+  margin: auto;
+  margin-top: 10px;
+}
+
+.button-46:active,
+.button-46:hover {
+  outline: 0;
+}
+
+.button-46:hover {
+  background-color: #FFFFFF;
+  border-color: rgba(0, 0, 0, 0.19);
+}
+
+  .button-46 {
+    font-size: 14px;
+    width: 100px;
+    padding: 4px 4px;
+  }
+
+
+.ta1{
+	max-height: 100 px;
+	font-size: 36px;
+	padding: 40 0 0 30px;
+	
+}
+
+.ta2{
+	height: 40px;
+	width: 100%;
+	text-align: center;
+	vertical-align: middle;
+	padding: 0 0 0 0px;
+	font-size: 16px;
+	margin: 0 0 0 0px;
+}
+
+.response{
+	background-color: #f5f5f5;
+	color:black;
+	font-size: 20px;
+	box-sizing: border-box;
+	border: 2px solid #ccc;
+	max-width: 2000px;
+	width: 95%;
+	padding: 10 20 10 20px;
+	min-height: 200px;
+	border-radius: 4px;
+	resize: none;
+	margin: auto;
+	margin-top: 30px;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+table, tr, th, td{
+	border: 1px solid black;
+	border-collapse: collapse;
+	width: 100%;
+}
+th, td{
+	padding: 25px;
+}
+
+p {
+	line-height: 150%;
+	margin: 0 0 10px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	color: #2E4A74;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+h1 {
+	font-size: 24px;	margin: 0 10 15px;
+	font-weight: normal;
+}
+
+h2 {
+	font-size: 36px;
+	margin: 20 0 12px;
+	font-weight: normal;
+}
+
+h3 {
+	font-size: 15px;
+	margin: 5 0 0 5px;
+	font-weight: normal;
+	padding: 2px 2px 2px 2px;
+}
+
+
+h4, h5, h6 {
+	margin: 5px 0 5px;
+	font-weight: bold;
+}
+
+h1 a,
+h2 a,
+h3 a,
+h4 a,
+h5 a,
+h6 a {}
+
+a img {
+	border: none;
+	outline: none;
+}
+
+a {
+	color: #363636;
+	outline: none;
+	text-decoration: none;
+}
+
+a:hover {
+	color: #999;
+}
+
+/* remove dotted lines on some links in FF browser */
+
+a,
+a:active,
+a:visited,
+a img {
+	outline: none;
+}
+
+/* / */
+	
+/* CLEARFIX */
+.clearfix:after {
+	content: ".";
+	display: block;
+	clear: both;
+	visibility: hidden;
+	line-height: 0;
+	height: 0;
+}
+ 
+.clearfix {
+	display: inline-block;
+}
+ 
+html[xmlns] .clearfix {
+	display: block;
+}
+ 
+* html .clearfix {
+	height: 1%;
+}
+ 
+ .prompt-container{
+	 margin: 0 0 0 0px;
+ }
+ #prompt > h2 {
+	 margin-left: 20%;
+ }
+ #prompt > textarea{
+	 width: 100%;
+	 max-width: 200px;
+ }
+ .ui-checkboxradio-label{
+	width:10em
+ }
+.ui-checkboxradio-icon{
+	 display:none;
+ }
+.ui-checkboxradio-label {
+	margin:4 0 0 0px;
+	border-radius: 10%;
+}
+.dp{
+	margin:4 0 0 0px
+}
+
+.modeler-response{
+	background-color: #f5f5f5;
+	color:black;
+	font-size: 20px;
+	box-sizing: border-box;
+	border: 2px solid #ccc;
+	max-width: 2000px;
+	width: 100%;
+	padding: 10 20 10 20px;
+	min-height: 200px;
+	border-radius: 4px;
+	resize: none;
+	margin: none;
+	margin-left: 20px;
+	margin-top: 30px;
+	font-family: Arial, Helvetica, sans-serif;
+}
+.dt-control {
+	width: 10px !important ;
+}
+
+.odd > td, .even > td{
+	width: 100px;
+	padding: 10px;
+	margin: 10px;
+}
+
+table.dataTable.dtr-inline.collapsed>tbody>tr[role="row"]>td:first-child:before, table.dataTable.dtr-inline.collapsed>tbody>tr[role="row"]>th:first-child:before{
+	top:20px !important;
+	left:17px !important;
+}
+
+.dataTables_length{
+	margin-bottom:20px
+}

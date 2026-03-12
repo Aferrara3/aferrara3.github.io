@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>RARIAI Sandbox</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+        .header-title {
+            font-size: 4rem;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+        .text-accent {
+            color: #3498db;
+        }
+        .intro-text {
+            font-size: 1.1rem;
+            color: #555;
+            margin-bottom: 3rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .card {
+            height: 100%;
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: none;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border-radius: 12px;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+        }
+        .card-body {
+            display: flex;
+            flex-direction: column;
+            padding: 1.5rem;
+        }
+        .card-title {
+            font-weight: 700;
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            color: #2c3e50;
+        }
+        .card-text {
+            flex-grow: 1;
+            color: #666;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+        .btn {
+            border-radius: 8px;
+            padding: 0.5rem 1.5rem;
+            font-weight: 500;
+            align-self: flex-start;
+            margin-top: 1rem;
+        }
+        .btn-primary {
+            background-color: #3498db;
+            border-color: #3498db;
+        }
+        .btn-primary:hover {
+            background-color: #2980b9;
+            border-color: #2980b9;
+        }
+        .section-header {
+            margin-top: 4rem;
+            margin-bottom: 1rem;
+            color: #2c3e50;
+            font-weight: 300;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 1rem;
+            width: 100%;
+        }
+        .note-text {
+            font-size: 0.85rem;
+            color: #e74c3c;
+            margin-top: 0.5rem;
+            font-style: italic;
+        }
+        footer {
+            margin-top: 5rem;
+            padding: 2rem;
+            text-align: center;
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+        a { text-decoration: none !important; }
+    </style>
+</head>
+<body>
+
+    <div class="container text-center">
+        <h1 class="header-title">RARI<span class="text-accent">AI</span></h1>
+        
+        <p class="intro-text">
+            Sandbox for rapid prototyping and small apps. 
+            Emphasis is on quickly evaluating utility and toying with concepts rather than polished responsive design.
+        </p>
+
+        <div class="row text-left">
+            <!-- Kalshi Weather -->
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Kalshi Weather Utilities</h5>
+                        <p class="card-text">
+                            Bet on weather events via Kalshi. Originally built to test the thesis that retail traders are inefficient, it evolved into researching bot battles around resolution methods.
+                        </p>
+                        <p class="note-text">Active Dev. Hosted on homelab. Text me if down.</p>
+                        <a href="https://www.kalshi.alexanderferrara.com/" class="btn btn-primary mt-auto">Launch App</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Video Auto-Cut -->
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Video Auto-Cut</h5>
+                        <p class="card-text">
+                            Three AI video workflows: 
+                            1. B-roll semantic search. 
+                            2. Long-to-short form via diarization. 
+                            3. Long-to-short via keyframe metadata.
+                        </p>
+                        <p class="note-text">Hosted on homelab (GPU). Whitelist access only.</p>
+                        <a href="https://video-cut.rariai.com/" class="btn btn-primary mt-auto">Launch App</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SBA -->
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Sports Betting Arb Finder</h5>
+                        <p class="card-text">
+                            A tool to find arbitrage opportunities in the US online sports betting market. 
+                            Uses 3rd party APIs to identify surebets across different sportsbooks.
+                        </p>
+                        <p class="note-text">Use at your own risk. Bookmakers may limit accounts.</p>
+                        <a href="sba.html" class="btn btn-primary mt-auto">Launch App</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ML4Stonks -->
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">ML4Stonks</h5>
+                        <p class="card-text">
+                            Accessible machine learning for stock trading. 
+                            Train and test models (currently Q-Learning) through a simple UI tied into Alpaca for stock data.
+                        </p>
+                        <p class="note-text">Desktop only. Backend functional, frontend prototype.</p>
+                        <a href="stonks.html" class="btn btn-primary mt-auto">Launch App</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CPI Viz -->
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">CPI Inflation Viz</h5>
+                        <p class="card-text">
+                            Interactive chart to visualize the impact of inflation. 
+                            Baseline the buying power of a dollar against a given period to see how it has scaled over time.
+                        </p>
+                        <a href="../../CPI.html" class="btn btn-primary mt-auto">Launch App</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Catan -->
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Catan Trading Bloc</h5>
+                        <p class="card-text">
+                            Streamline trade planning in Catan. 
+                            Tap icons to signal resource status (available, interested, or hidden) to other players.
+                        </p>
+                        <p class="note-text">For use on mobile (rotation locked).</p>
+                        <a href="catan-trading-bloc.html" class="btn btn-primary mt-auto">Launch App</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dog Door -->
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Dog Door Remote</h5>
+                        <p class="card-text">
+                            Control interface for my custom 3D printed smart dog door. 
+                            Mainly for personal access convenience.
+                        </p>
+                        <a href="dog-door.html" class="btn btn-primary mt-auto">Launch App</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <h3 class="section-header text-left ml-3">Legacy Projects (Pre-ChatGPT)</h3>
+            <div class="w-100"></div>
+            <p class="text-left text-muted mb-4 ml-3">Experimental wrappers built on early GPT-3. Not maintained since the advent of ChatGPT.</p>
+        </div>
+
+        <div class="row text-left">
+            <!-- ELI-AI -->
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">ELI-AI</h5>
+                        <p class="card-text">
+                            Explain Like I'm [Age]. 
+                            Attempts to explain a given input at an appropriate content-context and reading level for a specified target age group.
+                        </p>
+                        <a href="eli-ai.html" class="btn btn-secondary mt-auto">Launch App</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Summarize-AI -->
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Summarize-AI</h5>
+                        <p class="card-text">
+                            Accepts large blocks of text (or a topic seed) and returns a summary within a user-provided target wordcount.
+                        </p>
+                        <a href="summarize-ai.html" class="btn btn-secondary mt-auto">Launch App</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2026 A. Ferrara. All rights reserved.
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

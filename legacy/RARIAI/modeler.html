@@ -1,0 +1,78 @@
+<html>
+<head>
+<title>Stonk Modeler</title>
+<script src="static/jquery.min.js"></script>
+<script src="static/jquery-ui.min.js"></script>
+<script src="static/plotly-latest.min.js"></script>
+<script src="static/jquery.dataTables.min.js"></script>
+
+<script>
+function showSpinner() {
+	var loadingDiv = document.getElementById('loading');
+	loadingDiv.style.visibility = 'visible';
+}
+function hideSpinner() {
+	var loadingDiv = document.getElementById('loading');
+	loadingDiv.style.visibility = 'hidden';
+}
+$(document).ready(function(){
+
+	showSpinner()	
+		
+		
+	$.post("https://www.rariai.com/stonk_model_db_all",
+	{
+	prompt: "123"
+	},
+	function(data,status){
+	$("#example")[0].innerHTML = data
+	$('#example').removeAttr('width').DataTable(
+		{'responsive': true, 
+		columnDefs: [
+			{ 	width: 200, 
+				targets: 0 
+			}		
+		],
+		fixedColumns: true});
+		
+	$('#example tbody').on('click', 'td.dt-control', function () {
+		var tr = $(this).closest('tr');
+		var row = table.row(tr);
+		if (row.child.isShown()) {
+			row.child.hide();
+			tr.removeClass('shown');
+		} else {
+			row.child(format(row.data())).show();
+			tr.addClass('shown');
+		}
+	});
+	hideSpinner()	
+	});
+	
+	$("#button2").click(function(){
+		document.referrer.includes('stonks.html') ? history.back() : window.location.href = "stonks.html";
+	})
+	
+});
+</script>
+<meta charset="UTF-8" />
+<link rel="stylesheet" href="static/jquery-ui.css">
+<link rel="stylesheet" href="static/stonk-style.css" />
+<link rel="stylesheet" href="static/spin.css" />
+<link rel="stylesheet" href="static/jquery.dataTables.min.css"/>
+
+</head>
+<body>
+
+<div class="content-main">
+<button class="button-46" style="margin: 10 10 0 10px;" id="button2">Return</button>
+	<div id="loading" class="loading">
+		Loading&#8230;     
+	</div>
+	<div id="response" class="modeler-response" style="margin-top:10px">
+			<table id="example" class="stripe row-border order-column"></table>
+	</div>
+</div>
+
+</body>
+</html>

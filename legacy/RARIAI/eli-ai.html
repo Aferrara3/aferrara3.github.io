@@ -1,0 +1,68 @@
+<html>
+<head>
+<title>ELI AI</title>
+<script src="static/jquery.min.js"></script>
+
+<script>
+function showSpinner() {
+	var loadingDiv = document.getElementById('loading');
+	loadingDiv.style.visibility = 'visible';
+}
+function hideSpinner() {
+	var loadingDiv = document.getElementById('loading');
+	loadingDiv.style.visibility = 'hidden';
+}
+$(document).ready(function(){
+    $("button").click(function(){
+        showSpinner()
+		$.post("https://www.rariai.com/eli_prompt",
+        {
+		  prompt: $("#prompt_text").val(),
+		  age: $("#age").val()
+        },
+        function(data,status){
+            //alert("Data: " + data + "\nStatus: " + status);
+			$("#response_text").text(data)
+			hideSpinner()
+        });
+    });
+
+	$('#age').on('input',function(e){
+		console.log(parseInt($("#age").val()));
+		if(!isNaN(parseInt($("#age").val()))){
+			console.log("Reached");
+			$(".button-46").text("ELI"+parseInt($("#age").val()).toString()+"!");
+		}
+	});
+});
+
+</script>
+<meta charset="UTF-8" />
+<link rel="stylesheet" href="static/style.css" />
+<link rel="stylesheet" href="static/spin.css" />
+</head>
+<body>
+
+<div class="content-main">
+<div id="loading" class="loading">
+		Loading&#8230;
+	</div>
+	<div class="prompt-container">
+		<div id="prompt">
+			<h1>Explain . . .</h1>
+			<textarea id="prompt_text" class="ta1" autofocus></textarea>
+			<h2> . . . like I am
+		  <textarea id="age" class="ta2">5</textarea>
+		  years old </h2>
+		</div>
+
+		<button class="button-46">ELI5!</button>
+	</div>
+
+	<div id="response" class="response">
+	<p id="response_text"></p>
+	</div>
+</div>
+
+</body>
+</html>
