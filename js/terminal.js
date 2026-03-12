@@ -48,7 +48,7 @@
                 description: "Visit Sandbox",
                 execute: () => {
                     printOutput("Opening Sandbox...", "info");
-                    window.open('https://www.rariai.com/', '_blank');
+                    window.open('https://www.alexanderferrara.com/legacy/RARIAI/', '_blank');
                 }
             },
             narrative: {
