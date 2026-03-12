@@ -74,7 +74,7 @@ $(document).ready(function(){
 	
 	$("#button1").click(function(){
       showSpinner()		
-      $.post("https://www.rariai.com/stonks",
+      $.post("https://api2.rariai.com/stonks",
           {
 			prompt: $("#prompt_text").val(),
 			sd: $("#sd_picker").val(),
@@ -103,7 +103,7 @@ $(document).ready(function(){
 
 
 	  console.log(inds)
-      $.post("https://www.rariai.com/stonk_model_train",
+      $.post("https://api2.rariai.com/stonk_model_train",
           {
 			prompt: prompt,
 			sd: is_sd,
@@ -123,7 +123,7 @@ $(document).ready(function(){
 	});
 	$("#button3").click(function(){
       showSpinner()		
-      $.post("https://www.rariai.com/stonk_model_test",
+      $.post("https://api2.rariai.com/stonk_model_test",
           {
 			prompt: $("#prompt_text").val(),
 			sd: $("#sd_picker").val(),

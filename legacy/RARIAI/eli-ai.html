@@ -15,7 +15,7 @@ function hideSpinner() {
 $(document).ready(function(){
     $("button").click(function(){
         showSpinner()
-		$.post("https://www.rariai.com/eli_prompt",
+		$.post("https://api2.rariai.com/eli_prompt",
         {
 		  prompt: $("#prompt_text").val(),
 		  age: $("#age").val()
