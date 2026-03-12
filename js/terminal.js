@@ -98,18 +98,18 @@
                     printOutput(args || "");
                 }
             },
-            weather: {
-                description: "Current weather",
-                execute: () => {
-                    const weathers = [
-                        "Sunny, 72°F. Perfect day for coding.",
-                        "Cloudy with a chance of merge conflicts.",
-                        "Rainy. Good time to stay inside and hack.",
-                        "404 Weather Not Found."
-                    ];
-                    printOutput(weathers[Math.floor(Math.random() * weathers.length)]);
-                }
-            },
+            // weather: {
+            //     description: "Current weather",
+            //     execute: () => {
+            //         const weathers = [
+            //             "Sunny, 72°F. Perfect day for coding.",
+            //             "Cloudy with a chance of merge conflicts.",
+            //             "Rainy. Good time to stay inside and hack.",
+            //             "404 Weather Not Found."
+            //         ];
+            //         printOutput(weathers[Math.floor(Math.random() * weathers.length)]);
+            //     }
+            // },
             // joke: {
             //     description: "Tell a joke",
             //     execute: () => {
