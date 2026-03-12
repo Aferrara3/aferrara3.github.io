@@ -110,19 +110,19 @@
                     printOutput(weathers[Math.floor(Math.random() * weathers.length)]);
                 }
             },
-            joke: {
-                description: "Tell a joke",
-                execute: () => {
-                    const jokes = [
-                        "Why do programmers prefer dark mode? Because light attracts bugs.",
-                        "How many programmers does it take to change a light bulb? None, that's a hardware problem.",
-                        "I would tell you a UDP joke, but you might not get it.",
-                        "A SQL query walks into a bar, walks up to two tables and asks, 'Can I join you?'",
-                        "There are 10 types of people in the world: those who understand binary, and those who don't."
-                    ];
-                    printOutput(jokes[Math.floor(Math.random() * jokes.length)]);
-                }
-            },
+            // joke: {
+            //     description: "Tell a joke",
+            //     execute: () => {
+            //         const jokes = [
+            //             "Why do programmers prefer dark mode? Because light attracts bugs.",
+            //             "How many programmers does it take to change a light bulb? None, that's a hardware problem.",
+            //             "I would tell you a UDP joke, but you might not get it.",
+            //             "A SQL query walks into a bar, walks up to two tables and asks, 'Can I join you?'",
+            //             "There are 10 types of people in the world: those who understand binary, and those who don't."
+            //         ];
+            //         printOutput(jokes[Math.floor(Math.random() * jokes.length)]);
+            //     }
+            // },
             // Fun Commands
             sudo: {
                 description: "Admin",
