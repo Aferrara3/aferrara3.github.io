@@ -34,7 +34,7 @@
                 description: "View Resume",
                 execute: () => {
                     printOutput("Opening Resume...", "info");
-                    window.open('files/Alexander_Ferrara_Resume_11.18.25.pdf', '_blank');
+                    window.open('files/Alexander_Ferrara_Resume_03.17.26.pdf', '_blank');
                 }
             },
             linkedin: {
