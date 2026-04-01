@@ -8,24 +8,86 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --page-bg: #f8f9fa;
+            --page-text: #333;
+            --heading-color: #2c3e50;
+            --accent-color: #3498db;
+            --intro-color: #555;
+            --card-bg: #ffffff;
+            --card-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            --card-shadow-hover: 0 10px 20px rgba(0,0,0,0.15);
+            --card-title-color: #2c3e50;
+            --card-text-color: #666;
+            --section-border: #ddd;
+            --note-color: #e74c3c;
+            --footer-color: #aaa;
+            --toggle-bg: #ffffff;
+            --toggle-border: #ced4da;
+            --toggle-text: #2c3e50;
+            --section-subtext: #6c757d;
+        }
+        body.dark-mode {
+            --page-bg: #111827;
+            --page-text: #e5e7eb;
+            --heading-color: #f9fafb;
+            --accent-color: #60a5fa;
+            --intro-color: #d1d5db;
+            --card-bg: #1f2937;
+            --card-shadow: 0 10px 25px rgba(0,0,0,0.25);
+            --card-shadow-hover: 0 16px 30px rgba(0,0,0,0.35);
+            --card-title-color: #f9fafb;
+            --card-text-color: #d1d5db;
+            --section-border: #374151;
+            --note-color: #fca5a5;
+            --footer-color: #9ca3af;
+            --toggle-bg: #1f2937;
+            --toggle-border: #4b5563;
+            --toggle-text: #f9fafb;
+            --section-subtext: #9ca3af;
+        }
         body {
             font-family: 'Roboto', sans-serif;
-            background-color: #f8f9fa;
-            color: #333;
+            background-color: var(--page-bg);
+            color: var(--page-text);
+            transition: background-color 0.25s ease, color 0.25s ease;
+        }
+        .top-bar {
+            display: flex;
+            justify-content: flex-end;
+            padding-top: 1.5rem;
+        }
+        .theme-toggle {
+            background-color: var(--toggle-bg);
+            color: var(--toggle-text);
+            border: 1px solid var(--toggle-border);
+            border-radius: 999px;
+            padding: 0.55rem 1rem;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+        }
+        .theme-toggle:hover,
+        .theme-toggle:focus {
+            color: var(--toggle-text);
+            text-decoration: none;
+        }
+        .theme-toggle-icon {
+            margin-right: 0.5rem;
         }
         .header-title {
             font-size: 4rem;
             font-weight: 700;
-            color: #2c3e50;
+            color: var(--heading-color);
             margin-top: 2rem;
             margin-bottom: 1rem;
         }
         .text-accent {
-            color: #3498db;
+            color: var(--accent-color);
         }
         .intro-text {
             font-size: 1.1rem;
-            color: #555;
+            color: var(--intro-color);
             margin-bottom: 3rem;
             max-width: 800px;
             margin-left: auto;
@@ -35,12 +97,13 @@
             height: 100%;
             transition: transform 0.2s, box-shadow 0.2s;
             border: none;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            background-color: var(--card-bg);
+            box-shadow: var(--card-shadow);
             border-radius: 12px;
         }
         .card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+            box-shadow: var(--card-shadow-hover);
         }
         .card-body {
             display: flex;
@@ -51,11 +114,11 @@
             font-weight: 700;
             font-size: 1.25rem;
             margin-bottom: 1rem;
-            color: #2c3e50;
+            color: var(--card-title-color);
         }
         .card-text {
             flex-grow: 1;
-            color: #666;
+            color: var(--card-text-color);
             font-size: 0.95rem;
             line-height: 1.6;
         }
@@ -77,15 +140,18 @@
         .section-header {
             margin-top: 4rem;
             margin-bottom: 1rem;
-            color: #2c3e50;
+            color: var(--heading-color);
             font-weight: 300;
-            border-bottom: 1px solid #ddd;
+            border-bottom: 1px solid var(--section-border);
             padding-bottom: 1rem;
             width: 100%;
         }
+        .section-subtext {
+            color: var(--section-subtext) !important;
+        }
         .note-text {
             font-size: 0.85rem;
-            color: #e74c3c;
+            color: var(--note-color);
             margin-top: 0.5rem;
             font-style: italic;
         }
@@ -93,8 +159,9 @@
             margin-top: 5rem;
             padding: 2rem;
             text-align: center;
-            color: #aaa;
+            color: var(--footer-color);
             font-size: 0.9rem;
+            transition: color 0.25s ease;
         }
         a { text-decoration: none !important; }
     </style>
@@ -102,6 +169,12 @@
 <body>
 
     <div class="container text-center">
+        <div class="top-bar">
+            <button type="button" class="theme-toggle" id="theme-toggle" aria-pressed="false">
+                <span class="theme-toggle-icon" aria-hidden="true">🌙</span>
+                <span class="theme-toggle-label">Dark mode</span>
+            </button>
+        </div>
         <h1 class="header-title">RARI<span class="text-accent">AI</span></h1>
         
         <p class="intro-text">
@@ -112,7 +185,7 @@
         <div class="row">
             <h3 class="section-header text-left ml-3">Active Projects</h3>
             <div class="w-100"></div>
-            <p class="text-left text-muted mb-4 ml-3">This is the current hot stuff. Updates daily.</p>
+            <p class="text-left section-subtext mb-4 ml-3">This is the current hot stuff. Updates daily.</p>
         </div>
 
         <div class="row text-left">
@@ -153,7 +226,7 @@
                     <div class="card-body">
                         <h5 class="card-title">Contraction Tracker</h5>
                         <p class="card-text">
-                            My wife is pregnant. We are nerds. This is a tool to track contractions, predict labor onset, and visualize patterns over time. Built out of personal necessity and curiosity about time-series forecasting in a high-stakes context.
+                            My wife is pregnant. We are nerds. This is a tool to track contractions, predict labor milestones, and visualize patterns.
                         </p>
                         <p class="note-text">Active Dev. DB hosted on homelab. App works without it, but needed for session persistence.</p>
                         <a href="https://alexanderferrara.com/contraction-tracker/" class="btn btn-primary mt-auto">Launch App</a>
@@ -179,7 +252,7 @@
         <div class="row">
             <h3 class="section-header text-left ml-3">Dormant Projects</h3>
             <div class="w-100"></div>
-            <p class="text-left text-muted mb-4 ml-3">Random stuff I keep around to re-visit or just for personal quick access.</p>
+            <p class="text-left section-subtext mb-4 ml-3">Random stuff I keep around to re-visit or just for personal quick access.</p>
         </div>
         <div class="row text-left">
 
@@ -260,7 +333,7 @@
         <div class="row">
             <h3 class="section-header text-left ml-3">Legacy Projects (Pre-ChatGPT)</h3>
             <div class="w-100"></div>
-            <p class="text-left text-muted mb-4 ml-3">Experimental wrappers built in the pre-GPT-3 days. First time ever touching LLMs. Not maintained since the advent of ChatGPT.</p>
+            <p class="text-left section-subtext mb-4 ml-3">Experimental wrappers built in the pre-GPT-3 days. First time ever touching LLMs. Not maintained since the advent of ChatGPT.</p>
         </div>
 
         <div class="row text-left">
@@ -300,5 +373,33 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        (function () {
+            var storageKey = 'rariai-home-theme';
+            var toggle = document.getElementById('theme-toggle');
+            var label = toggle.querySelector('.theme-toggle-label');
+            var icon = toggle.querySelector('.theme-toggle-icon');
+
+            function applyTheme(theme) {
+                var isDark = theme === 'dark';
+                document.body.classList.toggle('dark-mode', isDark);
+                toggle.setAttribute('aria-pressed', String(isDark));
+                label.textContent = isDark ? 'Light mode' : 'Dark mode';
+                icon.textContent = isDark ? '☀️' : '🌙';
+            }
+
+            var savedTheme = localStorage.getItem(storageKey);
+            var preferredTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            var activeTheme = savedTheme || preferredTheme;
+
+            applyTheme(activeTheme);
+
+            toggle.addEventListener('click', function () {
+                activeTheme = document.body.classList.contains('dark-mode') ? 'light' : 'dark';
+                localStorage.setItem(storageKey, activeTheme);
+                applyTheme(activeTheme);
+            });
+        }());
+    </script>
 </body>
 </html>
